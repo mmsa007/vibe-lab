@@ -1,7 +1,7 @@
-﻿\"use client\";
+"use client";
 
-import { useEffect, useState, useRef } from \"react\";
-import { useRouter } from \"next/navigation\";
+import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 interface VibeResult {
   type: string;
@@ -24,14 +24,14 @@ export default function SharePage() {
   }, []);
 
   const handleSave = () => {
-    alert('请使用浏览器截图功能保存图片，或按 Ctrl+P 打印为 PDF');
+    alert('Please use browser screenshot to save image, or press Ctrl+P to print as PDF');
   };
 
   if (!result) {
     return (
       <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div className="loading-pulse" style={{ fontSize: "12px", letterSpacing: "4px", color: "#999" }}>
-          加载中...
+          Loading...
         </div>
       </div>
     );
@@ -40,13 +40,13 @@ export default function SharePage() {
   return (
     <div className="share-page">
       <div className="share-actions">
-        <button className="share-btn" onClick={() => router.push("/result")}>返回</button>
-        <button className="share-btn-primary" onClick={handleSave}>保存图片</button>
+        <button className="share-btn" onClick={() => router.push("/result")}>Back</button>
+        <button className="share-btn-primary" onClick={handleSave}>Save Image</button>
       </div>
 
       <div className="share-card" ref={cardRef}>
         <div className="share-card-inner">
-          <div className="share-brand">氛围感研究所</div>
+          <div className="share-brand">VIBE LAB</div>
 
           {image && (
             <div className="share-avatar">
@@ -67,13 +67,13 @@ export default function SharePage() {
 
           <div className="share-footer">
             <div className="share-footer-divider" />
-            <div className="share-footer-text">扫码测测你的氛围感</div>
+            <div className="share-footer-text">Scan to test your vibe</div>
             <div className="share-qr">QR</div>
           </div>
         </div>
       </div>
 
-      <div className="share-hint">保存图片，分享到小红书</div>
+      <div className="share-hint">Save image and share to social media</div>
     </div>
   );
 }
