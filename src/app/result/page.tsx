@@ -1,7 +1,7 @@
-﻿\"use client\";
+"use client";
 
-import { useEffect, useState } from \"react\";
-import { useRouter } from \"next/navigation\";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface VibeResult {
   type: string;
@@ -40,13 +40,13 @@ export default function ResultPage() {
     return (
       <div className="home-page">
         <p style={{ fontSize: "14px", color: "#999", marginBottom: "24px", textAlign: "center" }}>
-          暂无分析结果
+          No analysis result
         </p>
         <button
           onClick={() => router.push("/")}
           style={{ fontSize: "12px", letterSpacing: "2px", padding: "12px 32px", background: "#1a1a1a", color: "#fff", border: "none", cursor: "pointer" }}
         >
-          重新上传
+          Upload Again
         </button>
       </div>
     );
@@ -56,7 +56,7 @@ export default function ResultPage() {
     return (
       <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div className="loading-pulse" style={{ fontSize: "12px", letterSpacing: "4px", color: "#999" }}>
-          加载中...
+          Loading...
         </div>
       </div>
     );
@@ -66,29 +66,29 @@ export default function ResultPage() {
     <div className="result-page">
       <div className="result-nav">
         <button className="result-nav-btn" onClick={() => router.push("/")}>
-          重新分析
+          Re-analyze
         </button>
         <button className="result-nav-btn-primary" onClick={() => router.push("/share")}>
-          分享
+          Share
         </button>
       </div>
 
       <div className="result-container">
         <div className="result-header">
-          <div className="result-label">你的气质类型</div>
+          <div className="result-label">YOUR VIBE TYPE</div>
           <div className="result-type">{result.type}</div>
         </div>
 
         <div className="result-divider" />
 
         <div className="result-section">
-          <div className="section-title">气质分析</div>
+          <div className="section-title">Vibe Analysis</div>
           <div className="section-content">{result.analysis}</div>
         </div>
 
         {result.styles && result.styles.length > 0 && (
           <div className="result-section">
-            <div className="section-title">适合路线</div>
+            <div className="section-title">Recommended Styles</div>
             <div className="keywords-wrap">
               {result.styles.map((style, i) => (
                 <span className="keyword-tag" key={i}>{typeof style === 'string' ? style : style.name}</span>
@@ -99,13 +99,13 @@ export default function ResultPage() {
 
         {result.hairstyle && result.hairstyle.length > 0 && (
           <div className="result-section">
-            <div className="section-title">发型建议</div>
+            <div className="section-title">Hairstyle</div>
             <ul className="section-list">
               {result.hairstyle.map((item, i) => (
                 <li key={i}>
                   {typeof item === 'string' ? item : item.recommendation}
                   {typeof item === 'object' && item.avoid && (
-                    <>（避免：<strong>{item.avoid}</strong>）</>
+                    <> (Avoid: <strong>{item.avoid}</strong>)</>
                   )}
                 </li>
               ))}
@@ -115,13 +115,13 @@ export default function ResultPage() {
 
         {result.eyebrow && result.eyebrow.length > 0 && (
           <div className="result-section">
-            <div className="section-title">眉毛建议</div>
+            <div className="section-title">Eyebrow</div>
             <ul className="section-list">
               {result.eyebrow.map((item, i) => (
                 <li key={i}>
                   {typeof item === 'string' ? item : item.recommendation}
                   {typeof item === 'object' && item.avoid && (
-                    <>（避免：<strong>{item.avoid}</strong>）</>
+                    <> (Avoid: <strong>{item.avoid}</strong>)</>
                   )}
                 </li>
               ))}
@@ -131,13 +131,13 @@ export default function ResultPage() {
 
         {result.glasses && result.glasses.length > 0 && (
           <div className="result-section">
-            <div className="section-title">镜框建议</div>
+            <div className="section-title">Glasses</div>
             <ul className="section-list">
               {result.glasses.map((item, i) => (
                 <li key={i}>
                   {typeof item === 'string' ? item : item.recommendation}
                   {typeof item === 'object' && item.avoid && (
-                    <>（避免：<strong>{item.avoid}</strong>）</>
+                    <> (Avoid: <strong>{item.avoid}</strong>)</>
                   )}
                 </li>
               ))}
@@ -147,7 +147,7 @@ export default function ResultPage() {
 
         {result.keywords && result.keywords.length > 0 && (
           <div className="result-section">
-            <div className="section-title">氛围关键词</div>
+            <div className="section-title">Vibe Keywords</div>
             <div className="keywords-wrap">
               {result.keywords.map((keyword, i) => (
                 <span className="keyword-tag" key={i}>{keyword}</span>
@@ -158,7 +158,7 @@ export default function ResultPage() {
       </div>
 
       <div className="result-bottom-btn">
-        <button onClick={() => router.push("/share")}>生成分享卡片</button>
+        <button onClick={() => router.push("/share")}>Generate Share Card</button>
       </div>
     </div>
   );
