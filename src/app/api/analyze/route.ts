@@ -1,25 +1,25 @@
-﻿import { NextRequest, NextResponse } from \"next/server\";
+import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = 'edge';
 
-const SYSTEM_PROMPT = You are a vibe analyst specializing in East Asian aesthetics, Japanese/Korean atmosphere, and Xiaohongshu style.
+const SYSTEM_PROMPT = `You are a vibe analyst specializing in East Asian aesthetics, Japanese/Korean atmosphere, and Xiaohongshu style.
 Analyze the person in this photo. Return ONLY valid JSON with these fields:
-- type: a vibe type name in Chinese (e.g. 港风少爷感, 冷淡日系感, 韩系练习生感, 财阀千金感, 盐系少年感)
-- analysis: 3-4 sentences in Chinese, atmospheric and story-like
-- styles: array of {name, description} in Chinese, 3 items
-- hairstyle: array of {recommendation, avoid} in Chinese, 2 items
-- eyebrow: array of {recommendation, avoid} in Chinese, 2 items
-- glasses: array of {recommendation, avoid} in Chinese, 2 items
-- keywords: array of 6 Chinese keywords
+- type: a vibe type name (e.g. Hong Kong Style, Cold Japanese Vibe, Korean Trainee Vibe, Chaebol Daughter Vibe, Salt Boy Vibe)
+- analysis: 3-4 sentences analysis, atmospheric and story-like
+- styles: array of {name, description}, 3 items
+- hairstyle: array of {recommendation, avoid}, 2 items
+- eyebrow: array of {recommendation, avoid}, 2 items
+- glasses: array of {recommendation, avoid}, 2 items
+- keywords: array of 6 keywords
 
-Make the analysis emotional, magazine-style, and shareable.;
+Make the analysis emotional, magazine-style, and shareable.`;
 
 export async function POST(request: NextRequest) {
   try {
     const { image } = await request.json();
 
     if (!image) {
-      return NextResponse.json({ error: "请上传照片" }, { status: 400 });
+      return NextResponse.json({ error: "Please upload a photo" }, { status: 400 });
     }
 
     const apiKey = process.env.SILICONFLOW_API_KEY;
@@ -27,7 +27,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "API Key not configured" }, { status: 500 });
     }
 
-    // Remove data URL prefix if present
     const base64Image = image.startsWith('data:') ? image.split(',')[1] : image;
 
     const response = await fetch(
@@ -35,7 +34,7 @@ export async function POST(request: NextRequest) {
       {
         method: "POST",
         headers: {
-          Authorization: Bearer ,
+          Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -45,7 +44,7 @@ export async function POST(request: NextRequest) {
               role: "user",
               content: [
                 { type: "text", text: SYSTEM_PROMPT },
-                { type: "image_url", image_url: { url: data:image/jpeg;base64, } }
+                { type: "image_url", image_url: { url: `data:image/jpeg;base64,${base64Image}` } }
               ]
             }
           ],
@@ -59,7 +58,7 @@ export async function POST(request: NextRequest) {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       return NextResponse.json(
-        { error: errorData.message || HTTP  },
+        { error: errorData.message || `HTTP ${response.status}` },
         { status: response.status }
       );
     }
@@ -71,7 +70,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "AI returned no content" }, { status: 500 });
     }
 
-    // Parse JSON from content
     let result;
     try {
       const jsonMatch = content.match(/\{[\s\S]*\}/);
@@ -82,7 +80,7 @@ export async function POST(request: NextRequest) {
       }
     } catch {
       result = {
-        type: "气质分析",
+        type: "Vibe Analysis",
         analysis: content,
         styles: [],
         hairstyle: [],
@@ -95,6 +93,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.error("Analysis error:", error);
-    return NextResponse.json({ error: "服务错误，请重试" }, { status: 500 });
+    return NextResponse.json({ error: "Service error, please retry" }, { status: 500 });
   }
 }
