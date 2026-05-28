@@ -1,7 +1,7 @@
-﻿\"use client\";
+"use client";
 
-import { useState, useRef, useCallback } from \"react\";
-import { useRouter } from \"next/navigation\";
+import { useState, useRef, useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
@@ -41,16 +41,16 @@ export default function Home() {
       localStorage.setItem("vibeImage", base64);
       router.push("/result");
     } catch (err) {
-      setError("分析失败，请重试");
+      setError("Analysis failed, please try again");
       setIsAnalyzing(false);
     }
   };
 
   return (
     <div className="home-page">
-      <div className="home-logo">氛围感研究所</div>
-      <h1 className="home-title">有些人，天生自带氛围感</h1>
-      <p className="home-subtitle">上传照片，AI 解读你的气质密码</p>
+      <div className="home-logo">VIBE LAB</div>
+      <h1 className="home-title">Some People Are Born With Vibe</h1>
+      <p className="home-subtitle">Upload a photo, AI decodes your aura</p>
       
       {error && (
         <div style={{ color: "#e53e3e", fontSize: "13px", marginBottom: "20px", textAlign: "center", maxWidth: "320px" }}>
@@ -64,15 +64,15 @@ export default function Home() {
       >
         {isAnalyzing ? (
           <div className="loading-pulse" style={{ fontSize: "12px", letterSpacing: "4px", color: "#999" }}>
-            正在分析你的气质...
+            Analyzing your vibe...
           </div>
         ) : (
           <>
             <svg className="upload-icon" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="1">
               <path d="M12 5v14M5 12h14" strokeLinecap="round" />
             </svg>
-            <span className="upload-text">上传照片</span>
-            <span className="upload-hint">支持自拍 / 半身照 / 正脸</span>
+            <span className="upload-text">Upload Photo</span>
+            <span className="upload-hint">Selfie / Half-body / Front face</span>
           </>
         )}
       </div>
